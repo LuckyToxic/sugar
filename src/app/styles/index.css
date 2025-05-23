@@ -1,0 +1,79 @@
+
+@font-face{
+  font-family:'Product Sans';
+  src: url('/fonts/ProductSansRegular.ttf') format('truetype');
+  font-weight: 400;
+  font-style:normal;
+  font-display: swap;
+}
+@font-face{
+  font-family:'Product Sans';
+  src: url('/fonts/ProductSansMedium.ttf') format('truetype');
+  font-weight: 500;
+  font-style:normal;
+  font-display: swap;
+}
+@font-face{
+  font-family:'Product Sans';
+  src: url('/fonts/ProductSansBold.ttf') format('truetype');
+  font-weight: 700;
+  font-style:normal;
+  font-display: swap;
+}
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --main-purple:#6147C6;
+  font-family: 'Product Sans', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,body{
+  background-color: var(--main-purple);
+  background-image: url('media/bg.svg');
+  background-position: center;
+  background-size: cover; 
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+  background: transparent;
+}
+
+.hide-scrollbar {
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.1) inset !important;
+  box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.1) inset !important;
+  -webkit-text-fill-color: white !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+}

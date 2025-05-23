@@ -1,0 +1,17 @@
+.react-tel-input .form-control::placeholder {
+  color: white !important;
+  font-family: 'Product Sans', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-weight: 500;
+}
+
+.react-tel-input .flag-dropdown.open .selected-flag {
+    background: transparent;
+}
+
+.react-tel-input .selected-flag:hover, .react-tel-input .selected-flag:focus {
+    background-color: transparent;
+}
+
+.react-tel-input .country-list .country.highlight {
+    background-color: #27A7E7;
+}
