@@ -106,6 +106,10 @@ export default function FoodDetectorPage() {
     );
   };
 
+  const handleDeleteProduct = (index: number) => {
+    setProducts((prev) => prev.filter((_, i) => i !== index));
+  };
+
   return (
     <div style={{ height: "calc(100vh - 75px)" }}>
       {!photo && <CameraWidget onCapture={setPhoto} />}
@@ -122,6 +126,7 @@ export default function FoodDetectorPage() {
             <ProductList
               products={products}
               onSelect={setSelectedProductIndex}
+              onDelete={handleDeleteProduct}
             />
           </div>
           <div className="flex justify-center w-full px-3.5">
