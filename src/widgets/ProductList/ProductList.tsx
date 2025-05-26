@@ -22,11 +22,11 @@ export default function ProductList({
   } = useSwipeToDelete({ threshold: 50 });
 
   return (
-    <div className="p-4 pt-5 h-[37vh] flex flex-col gap-4 tracking-[0.5px]">
+    <div className="p-4 pt-5 flex-1 min-h-0 flex flex-col gap-4 tracking-[0.5px]">
       <h2 className="text-white text-[24px] font-[500]">
         Recognised products:
       </h2>
-      <div className="flex flex-col gap-4 overflow-x-auto hide-scrollbar">
+      <div className="flex flex-col gap-4 overflow-y-auto hide-scrollbar">
         {products.map((product, index) => {
           const caloriesItem = product.extra.find(
             (item) => item.label === "Calories"
@@ -48,7 +48,7 @@ export default function ProductList({
                   backdropFilter: "blur(20px)",
                   background: "rgba(255,255,255,0.06)",
                   minHeight: 56,
-                  position: "relative", 
+                  position: "relative",
                   overflow: "hidden",
                 }}
                 onClick={() => onSelect(index)}

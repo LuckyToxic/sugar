@@ -8,7 +8,7 @@ export default function PasswordRecoveryPage() {
 
   return (
     <form onSubmit={(e) => e.preventDefault()}>
-      <div className="text-white px-3 py-4 h-screen max-w-md mx-auto">
+      <div className="text-white px-3 py-4 h-screen-dynamic">
         <button type="button" onClick={() => navigate(-1)}>
           <img src="media/backArrow.svg" alt="back arrow" />
         </button>

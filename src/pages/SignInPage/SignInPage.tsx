@@ -12,8 +12,8 @@ export default function SignInPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="px-3 py-6 text-white flex flex-col items-center h-screen">
-      <div className="flex-grow flex items-center">
+    <div className="px-3 py-6 text-white flex flex-col items-center h-screen-dynamic">
+      <div className="flex-1 flex items-center justify-center">
         <img src="media/logo.svg" alt="logo" className="w-44" />
       </div>
       <div className="flex flex-col items-center gap-5 w-full max-w-md relative bottom-5">

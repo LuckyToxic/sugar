@@ -13,7 +13,7 @@ export default function PasswordRecoveryCodePage() {
 
   return (
     <form onSubmit={(e)=> e.preventDefault()}>
-      <div className="text-white p-4 h-screen max-w-md mx-auto">
+      <div className="text-white p-4 h-screen-dynamic">
         <button type="button" onClick={() => navigate(-1)}>
           <img src="media/backArrow.svg" alt="back arrow" />
         </button>

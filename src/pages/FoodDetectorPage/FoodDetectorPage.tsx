@@ -111,12 +111,12 @@ export default function FoodDetectorPage() {
   };
 
   return (
-    <div style={{ height: "calc(100vh - 75px)" }}>
+    <div className="h-screen-dynamic-minus-header">
       {!photo && <CameraWidget onCapture={setPhoto} />}
       {photo && selectedProductIndex === null && (
         <div className="w-full h-full pb-8 flex flex-col justify-between">
-          <div>
-            <div className="w-full h-[44vh]">
+          <div className="flex flex-col flex-1 overflow-hidden">
+            <div className="w-full h-[54%]">
               <img
                 src={photo}
                 alt="food"

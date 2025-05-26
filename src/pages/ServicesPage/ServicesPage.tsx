@@ -38,10 +38,12 @@ export default function ServicesPage() {
   ];
   return (
     <div
-      className="bg-[#F8F8F8] bg-center bg-cover min-h-screen p-4"
-      style={{ backgroundImage: "url(media/services-bg.svg)" }}
+      className="h-screen-dynamic-minus-header bg-[#F8F8F8] bg-center bg-cover p-4"
+      style={{
+        backgroundImage: "url(media/services-bg.svg)",
+      }}
     >
-      <div className="max-h-[89vh] pb-5 hide-scrollbar flex flex-wrap justify-center gap-x-9 gap-y-3 overflow-x-auto">
+      <div className="h-full min-h-0 pb-5 hide-scrollbar flex flex-wrap justify-center gap-x-9 gap-y-3 overflow-y-auto">
         {services.map((service) => (
           <ServicesItem key={service.id} item={service} />
         ))}
