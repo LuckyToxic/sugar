@@ -19,13 +19,15 @@ export default function Header() {
   if (!currentPage) return null;
 
   return (
-    <div className="py-5 px-4 h-[70px] flex gap-4">
+    <div className="py-5 px-4 h-[75px] flex gap-4">
       {currentPage.showArrowBack && (
         <button onClick={() => navigate(-1)}>
           <img src="media/backArrow.svg" alt="arrow back" />
         </button>
       )}
-      <h1 className="text-white text-[24px] font-[600]">{currentPage.title}</h1>
+      <h1 className="text-white text-[24px] font-[400] tracing-[0.5px]">
+        {currentPage.title}
+      </h1>
     </div>
   );
 }

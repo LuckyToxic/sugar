@@ -1,9 +1,9 @@
-import type { AxiosInstance, InternalAxiosRequestConfig } from "axios";
+import type { AxiosInstance } from "axios";
 import axios from "axios";
 
-interface ExtendAxiosRequestConfig extends InternalAxiosRequestConfig{
-    sent?:boolean
-}
+// interface ExtendAxiosRequestConfig extends InternalAxiosRequestConfig{
+//     sent?:boolean
+// }
 
 export const axiosInstance: AxiosInstance = axios.create({
     baseURL: import.meta.env.VITE_BASE_URL,

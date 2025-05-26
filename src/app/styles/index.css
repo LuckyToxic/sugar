@@ -1,4 +1,13 @@
 
+
+
+@font-face{
+  font-family:'Product Sans';
+  src: url('/fonts/ProductSansThin.ttf') format('truetype');
+  font-weight: 200;
+  font-style:normal;
+  font-display: swap;
+}
 @font-face{
   font-family:'Product Sans';
   src: url('/fonts/ProductSansRegular.ttf') format('truetype');
@@ -47,7 +56,7 @@ body {
 
 html,body{
   background-color: var(--main-purple);
-  background-image: url('media/bg.svg');
+  background-image: url('/media/bg.svg');
   background-position: center;
   background-size: cover; 
   min-height: 100vh;
