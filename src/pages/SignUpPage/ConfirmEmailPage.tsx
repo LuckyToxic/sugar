@@ -13,7 +13,7 @@ export default function ConfirmEmailPage() {
   const { timer, reset } = useTimer(120);
 
   return (
-    <div className="text-white p-4 h-screen max-w-md mx-auto">
+    <div className="text-white p-4 h-screen-dynamic max-w-md mx-auto">
       <button onClick={() => navigate(-1)}>
         <img src="media/backArrow.svg" alt="back arrow" />
       </button>
