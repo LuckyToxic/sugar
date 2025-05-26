@@ -4,12 +4,27 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { Button } from "../../shared/ui/Button/Button";
 import { EmailOrWhatsAppInput } from "../../features/auth/ui/EmailORWhatsAppInput/EmailOrWhatsAppInput";
+import { validateEmail } from "../../shared/lib/validation/validateEmail";
+import { message } from "antd";
 
 export default function SignUpPage() {
   const [isWhatsApp, setIsWhatsApp] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const navigate = useNavigate();
+
+  const handleSubmit = () => {
+    if (!validateEmail(inputValue)) {
+      message.error("Enter the correct email address");
+      return;
+    }
+    if (!isChecked) {
+      message.error("To continue, you need to agree to the terms");
+      return;
+    }
+
+    navigate("/confirm-email", { state: inputValue });
+  };
 
   return (
     <form onSubmit={(e) => e.preventDefault()}>
@@ -51,7 +66,7 @@ export default function SignUpPage() {
             <Button
               type="submit"
               disabled={!isChecked || !inputValue.trim()}
-              onClick={() => navigate("/confirm-email", { state: inputValue })}
+              onClick={handleSubmit}
             >
               Create account
             </Button>

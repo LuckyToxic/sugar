@@ -1,10 +1,20 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { Button } from "../../shared/ui/Button/Button";
+import { validateEmail } from "../../shared/lib/validation/validateEmail";
+import { message } from "antd";
 
 export default function PasswordRecoveryPage() {
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState("");
+
+  const handleSubmit = () => {
+    if (!validateEmail(inputValue)) {
+      message.error("Enter the correct email");
+      return;
+    }
+    navigate("/password-recovery-code", { state: inputValue });
+  };
 
   return (
     <form onSubmit={(e) => e.preventDefault()}>
@@ -37,14 +47,12 @@ export default function PasswordRecoveryPage() {
               </span>
             </div>
           </div>
-            <p className="text-[14px]  text-center">
-              Please check your email inbox after submitting the form.
-            </p>
+          <p className="text-[14px]  text-center">
+            Please check your email inbox after submitting the form.
+          </p>
           <Button
             disabled={!inputValue.trim()}
-            onClick={() =>
-              navigate("/password-recovery-code", { state: inputValue })
-            }
+            onClick={handleSubmit}
             className="relative top-3"
           >
             Send code

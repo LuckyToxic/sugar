@@ -4,6 +4,7 @@ import { CodeInput } from "../../features/auth/ui/CodeInput/CodeInput";
 import { TimerWithRetry } from "../../features/auth/ui/TimerWithRetry/TimerWithRetry";
 import { Button } from "../../shared/ui/Button/Button";
 import { useTimer } from "../../features/auth/hooks/useTimer";
+import { message } from "antd";
 
 export default function ConfirmEmailPage() {
   const navigate = useNavigate();
@@ -11,6 +12,18 @@ export default function ConfirmEmailPage() {
   const { state } = location || {};
   const [code, setCode] = useState(["", "", "", ""]);
   const { timer, reset } = useTimer(120);
+
+  const handleConfirm = () => {
+    const codeStr = code.join("");
+    if (codeStr.length !== 4 || code.some((digit) => digit === "")) {
+      message.error("Please enter the 4 digit code to confirm");
+      return;
+    }
+    message.success(
+      "The mail has been successfully verified, enter the password"
+    );
+    navigate("/create-password");
+  };
 
   return (
     <div className="text-white p-4 h-screen-dynamic max-w-md mx-auto">
@@ -25,14 +38,15 @@ export default function ConfirmEmailPage() {
         <div className="flex flex-col gap-6">
           <p className="text-[17px] leading-[1.3] tracking-[0.3px]">
             A verification code has been sent to your email <br />
-            <span className="font-[700]">{state}</span><br/> Enter the code below
+            <span className="font-[700]">{state}</span>
+            <br /> Enter the code below
           </p>
 
           <CodeInput code={code} onChange={setCode} />
 
           <TimerWithRetry timer={timer} onRetry={reset} />
 
-          <Button onClick={() => navigate("/create-password")} className="relative bottom-1">
+          <Button onClick={handleConfirm} className="relative bottom-1">
             Confirm email
           </Button>
         </div>

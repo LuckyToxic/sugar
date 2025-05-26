@@ -4,12 +4,27 @@ import { colors } from "../../app/styles/variables";
 import { Button } from "../../shared/ui/Button/Button";
 import { PasswordInput } from "../../features/auth/ui/PasswordInput/PasswordInput";
 import { EmailOrWhatsAppInput } from "../../features/auth/ui/EmailORWhatsAppInput/EmailOrWhatsAppInput";
+import { validateEmail } from "../../shared/lib/validation/validateEmail";
+import { message } from "antd";
 
 export default function SignInPage() {
   const [isWhatsApp, setIsWhatsApp] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  const handleSubmit = () => {
+    if (!validateEmail(inputValue)) {
+      message.error("Enter the correct email");
+      return;
+    }
+    if (password.trim().length < 8) {
+      message.error("The password must be at least 8 characters long.");
+      return;
+    }
+
+    navigate("/services");
+  };
 
   return (
     <div className="px-3 py-6 text-white flex flex-col items-center h-screen-dynamic">
@@ -42,10 +57,7 @@ export default function SignInPage() {
           placeholder="Password"
         />
         <div className="w-full relative bottom-1">
-          <Button
-            disabled={!inputValue.trim()}
-            onClick={()=> navigate('/services')}
-          >
+          <Button disabled={!inputValue.trim()} onClick={handleSubmit}>
             Log in
           </Button>
         </div>

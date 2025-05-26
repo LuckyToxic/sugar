@@ -4,6 +4,7 @@ import { Button } from "../../shared/ui/Button/Button";
 import { TimerWithRetry } from "../../features/auth/ui/TimerWithRetry/TimerWithRetry";
 import { CodeInput } from "../../features/auth/ui/CodeInput/CodeInput";
 import { useTimer } from "../../features/auth/hooks/useTimer";
+import { message } from "antd";
 
 export default function PasswordRecoveryCodePage() {
   const navigate = useNavigate();
@@ -11,8 +12,20 @@ export default function PasswordRecoveryCodePage() {
   const [code, setCode] = useState(["", "", "", ""]);
   const { timer, reset } = useTimer(120);
 
+  const handleConfirm = () => {
+    const codeStr = code.join("");
+    if (codeStr.length !== 4 || code.some((digit) => digit === "")) {
+      message.error("Please enter the 4 digit code to confirm");
+      return;
+    }
+
+    message.success("The new password has been sent to email");
+    navigate("/sign-in");
+  };
+
+  
   return (
-    <form onSubmit={(e)=> e.preventDefault()}>
+    <form onSubmit={(e) => e.preventDefault()}>
       <div className="text-white p-4 h-screen-dynamic">
         <button type="button" onClick={() => navigate(-1)}>
           <img src="media/backArrow.svg" alt="back arrow" />
@@ -31,9 +44,13 @@ export default function PasswordRecoveryCodePage() {
 
             <CodeInput code={code} onChange={setCode} />
 
-            <TimerWithRetry timer={timer} onRetry={reset}/>
+            <TimerWithRetry timer={timer} onRetry={reset} />
 
-            <Button type="submit" className="relative" onClick={()=>navigate('/sign-in')}>
+            <Button
+              type="submit"
+              className="relative"
+              onClick={handleConfirm}
+            >
               Password recovery
             </Button>
           </div>

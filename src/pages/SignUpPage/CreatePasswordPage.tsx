@@ -2,6 +2,8 @@ import { useNavigate } from "react-router";
 import { useState } from "react";
 import { Button } from "../../shared/ui/Button/Button";
 import { PasswordInput } from "../../features/auth/ui/PasswordInput/PasswordInput";
+import { validatePassword } from "../../shared/lib/validation/validatePassword";
+import { message } from "antd";
 
 export default function CreatePasswordPage() {
   const navigate = useNavigate();
@@ -12,6 +14,23 @@ export default function CreatePasswordPage() {
     password.trim() !== "" &&
     repeatPassword.trim() !== "" &&
     password === repeatPassword;
+
+
+  const handleSubmit = ()=> {
+    if(!validatePassword(password)){
+      message.error(
+        "The password must contain at least 8 characters, one uppercase letter, one digit and one special character."
+      );
+      return
+    }
+
+    if(password !== repeatPassword){
+      message.error('Passwords don\'t match')
+      return
+    }
+    message.success("Account has been successfully registered");
+    navigate('/sign-in')
+  }
 
   return (
     <div className="text-white px-3 py-4 h-screen">
@@ -43,9 +62,7 @@ export default function CreatePasswordPage() {
         <div className="w-full relative bottom-6">
           <Button
             disabled={!isValid}
-            onClick={() => {
-              navigate("/sign-in");
-            }}
+            onClick={handleSubmit}
           >
             Sign up
           </Button>
