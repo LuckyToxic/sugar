@@ -1,6 +1,6 @@
 export interface ExtraItem {
   label: string;
-  value: string;
+  value: number;
   unit: string;
   icon?: string;
 }

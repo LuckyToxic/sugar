@@ -4,7 +4,7 @@ export default {
     extend: {
       height: {
         "screen-dynamic": "calc(var(--vh,1vh) * 100)",
-        "screen-dynamic-minus-header": "calc(var(--vh,1vh) * 100 - 75px)",
+        "screen-dynamic-minus-header": "calc(var(--vh,1vh) * 100 - 50px)",
       },
       minHeight: {
         "screen-dynamic": "calc(var(--vh,1vh) * 100)",

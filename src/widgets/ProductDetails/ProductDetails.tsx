@@ -16,11 +16,11 @@ export default function ProductDetails({
   onSaveAll
 }: ProductDetailsProps) {
   const [editableIndex, setEditableIndex] = useState<number | null>(null);
-  const [editValue, setEditValue] = useState<string>("");
+  const [editValue, setEditValue] = useState<number>(0);
 
   const handleFieldClick = (index: number) => {
     setEditableIndex(index);
-    setEditValue(product.extra[index].value);
+    setEditValue(0);
   };
 
   const handleSaveEdit = () => {
@@ -89,7 +89,7 @@ export default function ProductDetails({
                   <input
                     type="number"
                     value={editValue}
-                    onChange={(e) => setEditValue(e.target.value)}
+                    onChange={(e) => setEditValue(Number(e.target.value))}
                     className="rounded bg-white/20 text-white px-1 w-10 focus:outline-none "
                     autoFocus
                   />

@@ -22,8 +22,8 @@ export default function ProductList({
   } = useSwipeToDelete({ threshold: 50 });
 
   return (
-    <div className="p-4 pt-5 flex-1 min-h-0 flex flex-col gap-4 tracking-[0.5px]">
-      <h2 className="text-white text-[24px] font-[500]">
+    <div className="p-4 pt-3 flex-1 min-h-0 flex flex-col gap-4 tracking-[0.5px]">
+      <h2 className="text-white text-[20px] font-[500]">
         Recognised products:
       </h2>
       <div className="flex flex-col gap-4 overflow-y-auto hide-scrollbar">
