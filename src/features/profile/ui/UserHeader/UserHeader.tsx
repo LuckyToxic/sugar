@@ -8,7 +8,7 @@ export default function UserHeader({ user }: UserHeaderProps) {
   return (
     <div className="w-full flex items-center border-b-2 gap-4 pb-4">
       {user?.photo_url ? (
-        <span>
+        <span className="w-20 rounded-full">
           <img
             src={user?.photo_url}
             alt="user photo"
@@ -27,13 +27,12 @@ export default function UserHeader({ user }: UserHeaderProps) {
       <div className="flex-1 flex items-start">
         <div>
           <div className="font-semibold">
-            {user?.first_name || 'Guest'} {user?.last_name}
+            {user?.first_name || "Guest"} {user?.last_name}
           </div>
-          <div className="text-[14px] text-gray-500">@{user?.username || 'Username'}</div>
+          <div className="text-[14px] text-gray-500">
+            @{user?.username || "Username"}
+          </div>
         </div>
-        <span className="ml-auto">
-          <img src="media/edit-icon.svg" alt="edit profile" />
-        </span>
       </div>
     </div>
   );
