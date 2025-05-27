@@ -1,8 +1,6 @@
-import { useAppSelector } from "../../shared/hooks/reduxHooks";
 import ServicesItem from "../../widgets/ServicesItem/ServicesItem";
 
 export default function ServicesPage() {
- const user = useAppSelector(state => state.user.user)
   const services = [
     { id: 1, title: "Diary", image: "media/services/diary.svg", path: "" },
     {
@@ -23,7 +21,12 @@ export default function ServicesPage() {
       image: "media/services/woman-diary.svg",
       path: "",
     },
-    { id: 5, title: "Profile", image: "media/services/profile.svg", path: "" },
+    {
+      id: 5,
+      title: "Profile",
+      image: "media/services/profile.svg",
+      path: "/account",
+    },
     {
       id: 6,
       title: "Analyses detect",
@@ -38,8 +41,7 @@ export default function ServicesPage() {
     },
     { id: 8, title: "Checkup", image: "media/services/checkup.svg", path: "" },
   ];
-  console.log('TG',user);
-  
+
   return (
     <div
       className="h-screen-dynamic-minus-header bg-[#F8F8F8] bg-center bg-cover p-4"

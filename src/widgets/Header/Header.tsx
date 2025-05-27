@@ -12,6 +12,7 @@ export default function Header() {
   const pagesWithHeader: { [key: string]: PageInfo } = {
     "/services": { title: "Services", showArrowBack: false },
     "/food-detector": { title: "Recognition camera", showArrowBack: true },
+    '/account':{title:'Account',showArrowBack:true}
   };
 
   const currentPage = pagesWithHeader[location.pathname];
