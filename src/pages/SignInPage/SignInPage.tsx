@@ -6,6 +6,7 @@ import { PasswordInput } from "../../features/auth/ui/PasswordInput/PasswordInpu
 import { EmailOrWhatsAppInput } from "../../features/auth/ui/EmailORWhatsAppInput/EmailOrWhatsAppInput";
 import { validateEmail } from "../../shared/lib/validation/validateEmail";
 import { message } from "antd";
+import TelegramLoginButton from "../../shared/ui/TelegramLoginButton/TelegramLoginButton";
 
 export default function SignInPage() {
   const [isWhatsApp, setIsWhatsApp] = useState(false);
@@ -32,13 +33,7 @@ export default function SignInPage() {
         <img src="media/logo.svg" alt="logo" className="w-44" />
       </div>
       <div className="flex flex-col items-center gap-5 w-full max-w-md relative bottom-5">
-        <button
-          className="flex items-center justify-center gap-2 w-full rounded-lg p-3 text-[17px] font-[600] pr-8"
-          style={{ backgroundColor: colors.main_blue }}
-        >
-          <img src="media/tg.svg" alt="tg" className="h-[18px] pr-1" />
-          Telegram
-        </button>
+        <TelegramLoginButton/>
         <div className="w-full relative bottom-1">
           <EmailOrWhatsAppInput
             value={inputValue}

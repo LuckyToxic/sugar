@@ -1,4 +1,4 @@
-import { HashRouter, Route, Routes } from "react-router";
+import { BrowserRouter, Route, Routes } from "react-router";
 import Layout from "../layout/Layout";
 import SignUpPage from "../../pages/SignUpPage/SignUpPage";
 import ConfirmEmailPage from "../../pages/SignUpPage/ConfirmEmailPage";
@@ -11,27 +11,22 @@ import FoodDetectorPage from "../../pages/FoodDetectorPage/FoodDetectorPage";
 
 export default function Router() {
   return (
-    <HashRouter>
-      {/* <BrowserRouter basename="/sugar/"> */}
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route path="/" element={<SignUpPage />} />
-            <Route path="/confirm-email" element={<ConfirmEmailPage />} />
-            <Route path="/create-password" element={<CreatePasswordPage />} />
-            <Route path="/sign-in" element={<SignInPage />} />
-            <Route
-              path="/password-recovery"
-              element={<PasswordRecoveryPage />}
-            />
-            <Route
-              path="/password-recovery-code"
-              element={<PasswordRecoveryCodePage />}
-            />
-            <Route path="/services" element={<ServicesPage />} />
-            <Route path="/food-detector" element={<FoodDetectorPage />} />
-          </Route>
-        </Routes>
-      {/* </BrowserRouter> */}
-    </HashRouter>
+    <BrowserRouter basename="/sugar/">
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route path="/" element={<SignUpPage />} />
+          <Route path="/confirm-email" element={<ConfirmEmailPage />} />
+          <Route path="/create-password" element={<CreatePasswordPage />} />
+          <Route path="/sign-in" element={<SignInPage />} />
+          <Route path="/password-recovery" element={<PasswordRecoveryPage />} />
+          <Route
+            path="/password-recovery-code"
+            element={<PasswordRecoveryCodePage />}
+          />
+          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/food-detector" element={<FoodDetectorPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }

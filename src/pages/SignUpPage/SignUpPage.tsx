@@ -6,6 +6,7 @@ import { Button } from "../../shared/ui/Button/Button";
 import { EmailOrWhatsAppInput } from "../../features/auth/ui/EmailORWhatsAppInput/EmailOrWhatsAppInput";
 import { validateEmail } from "../../shared/lib/validation/validateEmail";
 import { message } from "antd";
+import TelegramLoginButton from "../../shared/ui/TelegramLoginButton/TelegramLoginButton";
 
 export default function SignUpPage() {
   const [isWhatsApp, setIsWhatsApp] = useState(false);
@@ -27,20 +28,13 @@ export default function SignUpPage() {
   };
 
   return (
-    <form onSubmit={(e) => e.preventDefault()}>
       <div className="px-3 py-6 text-white flex flex-col items-center h-screen-dynamic">
         <div className="min-h-full flex-1 flex flex-col items-center justify-between">
           <div className="flex-1 flex items-center">
             <img src="media/logo.svg" alt="logo" className="w-44" />
           </div>
           <div className="flex flex-col items-center gap-4 w-full max-w-md">
-            <button
-              className="flex items-center justify-center gap-2 w-full rounded-lg p-3 text-[17px] font-[600] pr-8"
-              style={{ backgroundColor: colors.main_blue }}
-            >
-              <img src="media/tg.svg" alt="tg" className="h-[18px] pr-1" />
-              Telegram
-            </button>
+            <TelegramLoginButton/>
 
             <EmailOrWhatsAppInput
               value={inputValue}
@@ -87,6 +81,5 @@ export default function SignUpPage() {
           </div>
         </div>
       </div>
-    </form>
   );
 }
