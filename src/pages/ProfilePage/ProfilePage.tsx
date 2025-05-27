@@ -1,17 +1,18 @@
 import { useState } from "react";
-import ProfileMenuItem from "../../features/profile/ui/ProfileMenuItem/ProfileMenuItem";
-import UserHeader from "../../features/profile/ui/UserHeader/UserHeader";
-import { useAppSelector } from "../../shared/hooks/reduxHooks";
-import { NotificationSettings } from "../../features/profile/ui/NotificationSettings/NotificationSettings";
-import { LanguageSettings } from "../../features/profile/ui/LanguageSettings/LanguageSettings";
-import {
-  ShowAccountLinking,
-  type ConnectedProfile,
-} from "../../features/profile/ui/ShowAccountLinking/ShowAccountLinking";
 import { SiTelegram, SiWhatsapp } from "react-icons/si";
 import { MdEmail } from "react-icons/md";
-import ShowPaymentIdentifier from "../../features/profile/ui/ShowPaymentIdentifier/ShowPaymentIdentifier";
-import ShowSubscriptionStatus from "../../features/profile/ui/ShowSubscriptionStatus/ShowSubscriptionStatus";
+import {
+  ConnectedProfile,
+  ShowAccountLinking,
+} from "@/features/profile/ui/ShowAccountLinking/ShowAccountLinking";
+import { useAppSelector } from "@/shared/hooks/reduxHooks";
+import { NotificationSettings } from "@/features/profile/ui/NotificationSettings/NotificationSettings";
+import { LanguageSettings } from "@/features/profile/ui/LanguageSettings/LanguageSettings";
+import ShowPaymentIdentifier from "@/features/profile/ui/ShowPaymentIdentifier/ShowPaymentIdentifier";
+import ShowSubscriptionStatus from "@/features/profile/ui/ShowSubscriptionStatus/ShowSubscriptionStatus";
+import UserHeader from "@/features/profile/ui/UserHeader/UserHeader";
+import ProfileMenuItem from "@/features/profile/ui/ProfileMenuItem/ProfileMenuItem";
+
 
 const mockProfiles: ConnectedProfile[] = [
   {
