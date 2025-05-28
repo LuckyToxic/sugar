@@ -12,7 +12,8 @@ export default function Header() {
   const pagesWithHeader: { [key: string]: PageInfo } = {
     "/services": { title: "Services", showArrowBack: false },
     "/food-detector": { title: "Recognition camera", showArrowBack: true },
-    '/account':{title:'Account',showArrowBack:true}
+    "/account": { title: "Account", showArrowBack: true },
+    "/diary": { title: "Diary", showArrowBack: true },
   };
 
   const currentPage = pagesWithHeader[location.pathname];
@@ -23,7 +24,7 @@ export default function Header() {
     <div className="py-2 px-4 h-[50px] flex items-center gap-4">
       {currentPage.showArrowBack && (
         <button onClick={() => navigate(-1)}>
-          <img src="media/backArrow.svg" alt="arrow back" className="w-8"/>
+          <img src="media/backArrow.svg" alt="arrow back" className="w-8" />
         </button>
       )}
       <h1 className="text-white text-[20px] font-[400] tracing-[0.5px]">

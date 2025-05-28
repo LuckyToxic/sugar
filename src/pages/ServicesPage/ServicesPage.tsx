@@ -2,7 +2,12 @@ import ServicesItem from "../../widgets/ServicesItem/ServicesItem";
 
 export default function ServicesPage() {
   const services = [
-    { id: 1, title: "Diary", image: "media/services/diary.svg", path: "" },
+    {
+      id: 1,
+      title: "Diary",
+      image: "media/services/diary.svg",
+      path: "/diary",
+    },
     {
       id: 2,
       title: "Ask doctor",
