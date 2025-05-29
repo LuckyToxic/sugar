@@ -24,7 +24,7 @@ export default function ServicesPage() {
       id: 4,
       title: "Woman diary",
       image: "media/services/woman-diary.svg",
-      path: "",
+      path: "/woman-diary",
     },
     {
       id: 5,
