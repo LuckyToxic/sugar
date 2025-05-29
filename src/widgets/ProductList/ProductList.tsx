@@ -18,7 +18,12 @@ export default function ProductList({
     handleTouchStart,
     handleTouchMove,
     handleTouchEnd,
+    handleMouseDown,
+    handleMouseLeave,
+    handleMouseMove,
+    handleMouseUp,
     closeSwipe,
+    getPreventClick,
   } = useSwipeToDelete({ threshold: 50 });
 
   return (
@@ -40,7 +45,11 @@ export default function ProductList({
               onTouchStart={handleTouchStart}
               onTouchMove={(e) => handleTouchMove(e, index)}
               onTouchEnd={() => handleTouchEnd(index)}
-              style={{ borderRadius: 12 }}
+              onMouseDown={handleMouseDown}
+              onMouseMove={(e) => handleMouseMove(e, index)}
+              onMouseUp={() => handleMouseUp(index)}
+              onMouseLeave={() => handleMouseLeave(index)}
+              style={{ userSelect: "none", cursor: "grab", borderRadius: 12 }}
             >
               <div
                 className="flex w-full justify-between items-center rounded-lg border-2 border-[#FFFFFF80] text-white bg-white/10 py-2 px-4 cursor-pointer transition-colors duration-300"
@@ -51,7 +60,14 @@ export default function ProductList({
                   position: "relative",
                   overflow: "hidden",
                 }}
-                onClick={() => onSelect(index)}
+                onClick={(e) => {
+                  if (getPreventClick()) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return;
+                  }
+                  onSelect(index);
+                }}
               >
                 <div className="flex flex-col leading-[1.4]">
                   <span className="font-[500] text-[17px]">{product.name}</span>
@@ -94,6 +110,7 @@ export default function ProductList({
                   }}
                   onClick={(e) => {
                     e.stopPropagation();
+                    e.preventDefault()
                     onDelete(index);
                     closeSwipe();
                   }}

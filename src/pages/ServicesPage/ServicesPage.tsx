@@ -12,7 +12,7 @@ export default function ServicesPage() {
       id: 2,
       title: "Ask doctor",
       image: "media/services/ask-doctor.svg",
-      path: "",
+      path: "/chat",
     },
     {
       id: 3,

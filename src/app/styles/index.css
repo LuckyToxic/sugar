@@ -84,3 +84,15 @@ input:-webkit-autofill:active {
 #telegram-login-container {
   display: none;
 }
+
+/* Убирает стрелочки в Chrome, Safari, Edge, Opera */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+/* Убирает стрелочки в Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}

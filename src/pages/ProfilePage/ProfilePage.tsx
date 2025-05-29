@@ -109,7 +109,7 @@ export default function ProfilePage() {
   return (
     <div className="w-full flex flex-col h-screen-dynamic-minus-header bg-[#F8F8F8] p-4">
       <UserHeader user={user} />
-      <div className="flex-1 flex flex-col gap-4 pt-5 overflow-y-auto hide-scrollbar">
+      <div className="flex-1 flex flex-col gap-4 pt-5 overflow-y-auto hide-scrollbar pb-4">
         {menuItems.map(({ text, icon, content }, index) => (
           <ProfileMenuItem
             key={index}

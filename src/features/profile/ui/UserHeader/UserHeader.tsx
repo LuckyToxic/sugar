@@ -12,7 +12,7 @@ export default function UserHeader({ user }: UserHeaderProps) {
           <img
             src={user?.photo_url}
             alt="user photo"
-            className="w-20 rounded-full border-4 border-[#3D2E76]"
+            className="w-20 h-20 rounded-full border-4 border-[#3D2E76]"
           />
         </span>
       ) : (

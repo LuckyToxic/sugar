@@ -14,6 +14,7 @@ export default function Header() {
     "/food-detector": { title: "Recognition camera", showArrowBack: true },
     "/account": { title: "Account", showArrowBack: true },
     "/diary": { title: "Diary", showArrowBack: true },
+    "/chat": { title: "Chat", showArrowBack: true },
   };
 
   const currentPage = pagesWithHeader[location.pathname];

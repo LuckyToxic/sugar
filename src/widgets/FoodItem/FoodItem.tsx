@@ -27,8 +27,13 @@ export default function FoodItem({
     handleTouchEnd,
     handleTouchMove,
     handleTouchStart,
+    handleMouseDown,
+    handleMouseLeave,
+    handleMouseUp,
+    handleMouseMove,
     closeSwipe,
-  } = useSwipeToDelete({ threshold: 50, supportSwipeRight: true });
+    getIsDragging,
+  } = useSwipeToDelete({ threshold: 30, supportSwipeRight: true }); // Уменьшил threshold для десктопа
 
   const [lastSwipe, setLastSwipe] = useState<{
     index: number | null;
@@ -58,10 +63,20 @@ export default function FoodItem({
     handleTouchEnd(index);
   };
 
-  // Новый обработчик клика по основному контенту
+  const handleMouseUpLocal = () => {
+    if (swipeDirection && swipedIndex === index) {
+      setLastSwipe({ index, direction: swipeDirection });
+    }
+    handleMouseUp(index);
+  };
+
   const handleContentClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    // Если текущая карточка свайпнута, сбрасываем свайп
+    if (getIsDragging()) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+
     if (lastSwipe.index !== null) {
       closeSwipe();
       setLastSwipe({ index: null, direction: null });
@@ -73,8 +88,17 @@ export default function FoodItem({
       onTouchStart={handleTouchStart}
       onTouchMove={(e) => handleTouchMove(e, index)}
       onTouchEnd={handleTouchEndLocal}
+      onMouseDown={handleMouseDown}
+      onMouseMove={(e) => handleMouseMove(e, index)}
+      onMouseUp={handleMouseUpLocal}
+      onMouseLeave={() => handleMouseLeave(index)}
+      style={{ userSelect: "none", touchAction: "pan-y" }}
+      className="w-full select-none"
     >
-      <div className="flex items-center justify-between bg-white text-[#6B47DC] rounded-xl shadow-sm p-3 mb-2 relative">
+      <div
+        className="flex items-center justify-between bg-white text-[#6B47DC] rounded-xl shadow-sm p-3 mb-2 relative"
+        style={{ cursor: getIsDragging() ? "grabbing" : "grab" }}
+      >
         {/* Левая часть: иконка редактирования */}
         <button
           className="absolute left-0 top-0 bottom-0 rounded-l-xl flex items-center justify-center transition-all duration-300"
@@ -88,7 +112,7 @@ export default function FoodItem({
           }}
           onClick={(e) => {
             e.stopPropagation();
-            onEdit(true)
+            onEdit(true);
             onSelect(index);
             closeSwipe();
             setLastSwipe({ index: null, direction: null });
@@ -104,6 +128,7 @@ export default function FoodItem({
           style={{
             paddingLeft: isSwipedRight ? "60px" : "0",
             paddingRight: isSwipedLeft ? "60px" : "0",
+            pointerEvents:(isSwipedLeft || isSwipedRight) ? 'auto' : 'none',
           }}
           onClick={handleContentClick}
         >
@@ -119,7 +144,6 @@ export default function FoodItem({
 
           <div
             className="flex items-center gap-2 font-bold text-[14px] ml-2 shrink-0"
-            style={{ zIndex: 2 }}
             onClick={() => onSelect(index)}
           >
             <span>{food.calories} calories</span>

@@ -10,6 +10,7 @@ import PasswordRecoveryCodePage from "@/pages/SignInPage/PasswordRecoveryCodePag
 import ServicesPage from "@/pages/ServicesPage/ServicesPage";
 import FoodDetectorPage from "@/pages/FoodDetectorPage/FoodDetectorPage";
 import DiaryPage from "@/pages/DiaryPage/DiaryPage";
+import AskDoctorPage from "@/pages/AskDoctorPage/AskDoctorPage";
 
 export default function Router() {
   return (
@@ -28,6 +29,7 @@ export default function Router() {
         <Route path="/food-detector" element={<FoodDetectorPage />} />
         <Route path="/account" element={<ProfilePage />} />
         <Route path="/diary" element={<DiaryPage />} />
+        <Route path="/chat" element={<AskDoctorPage />} />
       </Route>
     </Routes>
   );

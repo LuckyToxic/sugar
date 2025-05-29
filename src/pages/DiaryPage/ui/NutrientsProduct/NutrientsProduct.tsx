@@ -86,7 +86,7 @@ export default function NutrientsProduct({ product, onSave }:NutrientsProductPro
       <div className="px-4 pt-2 pb-8 h-full flex flex-col items-center justify-between">
         <div className="w-full flex flex-col items-center gap-4">
           <h2 className="font-semibold text-[#674EC8] text-[24px]">Edit</h2>
-          <div className="w-full h-screen-60-minus-header flex flex-col gap-2 overflow-y-auto hide-scrollbar">
+          <div className="w-full h-screen-60-minus-header flex flex-col gap-2 overflow-y-auto hide-scrollbar py-1 pb-4">
             {localExtra.map(({ label, value, unit }, index) => {
               const isEditing = editableIndex === index;
               // Формируем путь к иконке, заменяя пробелы на дефисы и приводя к нижнему регистру
