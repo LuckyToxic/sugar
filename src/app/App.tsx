@@ -15,6 +15,7 @@ function App() {
     const initUser = async () => {
       if (window.Telegram?.WebApp) {
         await window.Telegram.WebApp.ready();
+        window.Telegram.WebApp.expand();
         const tgUserRaw = window.Telegram.WebApp.initDataUnsafe?.user;
         if (tgUserRaw) {
           const tgUser: User = tgUserRaw;

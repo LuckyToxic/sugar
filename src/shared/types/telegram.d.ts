@@ -7,6 +7,7 @@ declare global {
         initDataUnsafe?: {
           user?: TelegramUser;
         };
+        expand:() => void;
       };
     };
   }
