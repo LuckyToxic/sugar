@@ -1,6 +1,7 @@
 import { Button } from "@/shared/ui/Button/Button";
 import { useEffect, useState } from "react";
 import { FoodItem } from "../../types";
+import { createPortal } from "react-dom";
 
 interface NutrientsProductProps{
     product:FoodItem
@@ -72,7 +73,7 @@ export default function NutrientsProduct({ product, onSave }:NutrientsProductPro
     setVisible(false);
   };
 
-  return (
+  return createPortal(
     <div
       className={`absolute bottom-0 left-0 w-full max-w-md bg-white rounded-t-3xl shadow-lg z-10
             transform transition-all duration-500 ease-in-out
@@ -147,6 +148,7 @@ export default function NutrientsProduct({ product, onSave }:NutrientsProductPro
           </Button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
