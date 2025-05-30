@@ -4,6 +4,7 @@ import { Button } from "../../shared/ui/Button/Button";
 import ProductDetails from "../../widgets/ProductDetails/ProductDetails";
 import ProductList from "../../widgets/ProductList/ProductList";
 import type { Product } from "../../entities/product/model";
+import DiaryEntryModal from "./ui/DiaryEnterModal/DiaryEntryModal";
 
 const mockProducts = [
   {
@@ -97,6 +98,7 @@ export default function FoodDetectorPage() {
     number | null
   >(null);
   const [products, setProducts] = useState<Product[]>(mockProducts);
+  const [isDiaryOpen, setDiaryOpen] = useState(false);
 
   const handleSaveProduct = (updateProduct: Product) => {
     setProducts((prevProducts) =>
@@ -130,7 +132,10 @@ export default function FoodDetectorPage() {
             />
           </div>
           <div className="flex justify-center w-full px-3.5">
-            <Button className="text-white w-full max-w-[400px] font-[400]">
+            <Button
+              onClick={() => setDiaryOpen(true)}
+              className="text-white w-full max-w-[400px] font-[400]"
+            >
               Add to diary
             </Button>
           </div>
@@ -144,6 +149,11 @@ export default function FoodDetectorPage() {
           onSaveAll={() => setSelectedProductIndex(null)}
         />
       )}
+      <DiaryEntryModal
+        isOpen={isDiaryOpen}
+        onClose={() => setDiaryOpen(false)}
+        onSave={() => {}}
+      />
     </div>
   );
 }

@@ -49,7 +49,7 @@ export default function WomanDiaryPage() {
         onMarkPeriod={handleMarkPeriod}
         onStartNew={handleStartNew}
       />
-      <div className="bg-[#F7F7F7] flex-1 -mt-6 pt-5 px-5 overflow-y-auto hide-scrollbar">
+      <div className="bg-[#F7F7F7] flex-1 -mt-6 pt-5 px-5 overflow-y-auto hide-scrollbar pb-8">
         <MyCycle cycles={cycles} />
         <CycleStory cycles={cycles} today={today} />
       </div>
