@@ -36,7 +36,7 @@ export default function ServicesPage() {
       id: 6,
       title: "Analyses detect",
       image: "media/services/analyses-detect.svg",
-      path: "",
+      path: "/analyses-detect",
     },
     {
       id: 7,

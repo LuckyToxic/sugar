@@ -12,6 +12,7 @@ import FoodDetectorPage from "@/pages/FoodDetectorPage/FoodDetectorPage";
 import DiaryPage from "@/pages/DiaryPage/DiaryPage";
 import AskDoctorPage from "@/pages/AskDoctorPage/AskDoctorPage";
 import WomanDiaryPage from "@/pages/WomanDiaryPage/WomanDiaryPage";
+import AnalysesDetectPage from "@/pages/AnalysesDetectPage/AnalysesDetectPage";
 
 export default function Router() {
   return (
@@ -32,6 +33,7 @@ export default function Router() {
         <Route path="/diary" element={<DiaryPage />} />
         <Route path="/chat" element={<AskDoctorPage />} />
         <Route path="/woman-diary" element={<WomanDiaryPage />} />
+        <Route path="/analyses-detect" element={<AnalysesDetectPage />} />
       </Route>
     </Routes>
   );

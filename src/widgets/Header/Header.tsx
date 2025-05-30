@@ -16,6 +16,7 @@ export default function Header() {
     "/diary": { title: "Diary", showArrowBack: true },
     "/chat": { title: "Chat", showArrowBack: true },
     "/woman-diary": { title: "Woman diary", showArrowBack: true },
+    "/analyses-detect": { title: "Recognition camera ", showArrowBack: true },
   };
 
   const currentPage = pagesWithHeader[location.pathname];
