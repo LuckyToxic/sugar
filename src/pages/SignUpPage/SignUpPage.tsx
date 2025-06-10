@@ -7,6 +7,7 @@ import { EmailOrWhatsAppInput } from "@/features/auth/ui/EmailORWhatsAppInput/Em
 import { CustomCheckbox } from "@/shared/ui/CustomCheckbox/CustomCheckbox";
 import { Button } from "@/shared/ui/Button/Button";
 import { colors } from "@/app/styles/variables";
+import { confirmEmail } from "@/api/confirmEmail";
 
 export default function SignUpPage() {
   const [isWhatsApp, setIsWhatsApp] = useState(false);
@@ -14,17 +15,35 @@ export default function SignUpPage() {
   const [inputValue, setInputValue] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = () => {
-    if (!validateEmail(inputValue)) {
-      message.error("Enter the correct email address");
-      return;
+  const handleSubmit = async () => {
+    let valueToSend = inputValue.trim();
+
+    if (isWhatsApp) {
+      if (!valueToSend.startsWith("+")) {
+        valueToSend = "+" + valueToSend;
+      }
+    } else {
+      if (!validateEmail(valueToSend)) {
+        message.error("Enter the correct email address");
+        return;
+      }
     }
+
     if (!isChecked) {
       message.error("To continue, you need to agree to the terms");
       return;
     }
 
-    navigate("/confirm-email", { state: inputValue });
+    try {
+      await confirmEmail(valueToSend);
+      navigate("/confirm-email", { state: valueToSend });
+    } catch (error) {
+      if (error instanceof Error) {
+        message.error(error.message);
+      } else {
+        message.error("Something went wrong");
+      }
+    }
   };
 
   return (

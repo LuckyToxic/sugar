@@ -1,36 +1,68 @@
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { useState } from "react";
 import { Button } from "../../shared/ui/Button/Button";
 import { PasswordInput } from "../../features/auth/ui/PasswordInput/PasswordInput";
 import { validatePassword } from "../../shared/lib/validation/validatePassword";
 import { message } from "antd";
+import { createUser } from "@/api/createUser";
+import { auth } from "@/api/auth";
+import { passwordRecovery } from "@/api/passwordRecovery";
 
 export default function CreatePasswordPage() {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
 
+  const location = useLocation();
+  const { state } = location || {};
+  const { login, hash, isChangePassword } = state;
+
   const isValid =
     password.trim() !== "" &&
     repeatPassword.trim() !== "" &&
     password === repeatPassword;
 
+  console.log(isChangePassword);
 
-  const handleSubmit = ()=> {
-    if(!validatePassword(password)){
+  const handleSubmit = async () => {
+    if (!validatePassword(password)) {
       message.error(
         "The password must contain at least 8 characters, one uppercase letter, one digit and one special character."
       );
-      return
+      return;
     }
 
-    if(password !== repeatPassword){
-      message.error('Passwords don\'t match')
-      return
+    if (password !== repeatPassword) {
+      message.error("Passwords don't match");
+      return;
     }
-    message.success("Account has been successfully registered");
-    navigate('/sign-in')
-  }
+    if (!isChangePassword) {
+      try {
+        await createUser(login, password, hash);
+        message.success("Account has been successfully registered");
+        await auth(login, password);
+        navigate("/services");
+      } catch (error) {
+        if (error instanceof Error) {
+          message.error(error.message);
+        } else {
+          message.error("Something went wrong");
+        }
+      }
+    } else {
+      try {
+        await passwordRecovery(login, password, hash);
+        message.success("Account has been successfully registered");
+        navigate("/sign-in");
+      } catch (error) {
+        if (error instanceof Error) {
+          message.error(error.message);
+        } else {
+          message.error("Something went wrong");
+        }
+      }
+    }
+  };
 
   return (
     <div className="text-white px-3 py-4 h-screen">
@@ -60,10 +92,7 @@ export default function CreatePasswordPage() {
           />
         </div>
         <div className="w-full relative bottom-6">
-          <Button
-            disabled={!isValid}
-            onClick={handleSubmit}
-          >
+          <Button disabled={!isValid} onClick={handleSubmit}>
             Sign up
           </Button>
         </div>

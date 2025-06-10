@@ -5,6 +5,7 @@ import { TimerWithRetry } from "../../features/auth/ui/TimerWithRetry/TimerWithR
 import { Button } from "../../shared/ui/Button/Button";
 import { useTimer } from "../../features/auth/hooks/useTimer";
 import { message } from "antd";
+import { confirmEmail } from "@/api/confirmEmail";
 
 export default function ConfirmEmailPage() {
   const navigate = useNavigate();
@@ -13,16 +14,29 @@ export default function ConfirmEmailPage() {
   const [code, setCode] = useState(["", "", "", ""]);
   const { timer, reset } = useTimer(120);
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     const codeStr = code.join("");
     if (codeStr.length !== 4 || code.some((digit) => digit === "")) {
       message.error("Please enter the 4 digit code to confirm");
       return;
     }
-    message.success(
-      "The mail has been successfully verified, enter the password"
-    );
-    navigate("/create-password");
+
+    try {
+      const hash = await confirmEmail(state, codeStr);
+      message.success(
+        "The mail has been successfully verified, enter the password"
+      );
+
+      navigate("/create-password", {
+        state: { login: state, hash, isChangePassword: false },
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        message.error(error.message);
+      } else {
+        message.error("Something went wrong");
+      }
+    }
   };
 
   return (

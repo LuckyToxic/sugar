@@ -3,17 +3,29 @@ import { useNavigate } from "react-router";
 import { Button } from "../../shared/ui/Button/Button";
 import { validateEmail } from "../../shared/lib/validation/validateEmail";
 import { message } from "antd";
+import { confirmEmail } from "@/api/confirmEmail";
 
 export default function PasswordRecoveryPage() {
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState("");
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!validateEmail(inputValue)) {
       message.error("Enter the correct email");
       return;
     }
-    navigate("/password-recovery-code", { state: inputValue });
+
+    try {
+      await confirmEmail(inputValue, undefined, true);
+      navigate("/password-recovery-code", { state: inputValue });
+      message.success("success");
+    } catch (error) {
+      if (error instanceof Error) {
+        message.error(error.message);
+      } else {
+        message.error("Something went wrong");
+      }
+    }
   };
 
   return (

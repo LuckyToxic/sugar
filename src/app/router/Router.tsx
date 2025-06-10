@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router";
+import { Navigate, Route, Routes } from "react-router";
 import ProfilePage from "@/pages/ProfilePage/ProfilePage";
 import Layout from "../layout/Layout";
 import SignUpPage from "@/pages/SignUpPage/SignUpPage";
@@ -13,27 +13,135 @@ import DiaryPage from "@/pages/DiaryPage/DiaryPage";
 import AskDoctorPage from "@/pages/AskDoctorPage/AskDoctorPage";
 import WomanDiaryPage from "@/pages/WomanDiaryPage/WomanDiaryPage";
 import AnalysesDetectPage from "@/pages/AnalysesDetectPage/AnalysesDetectPage";
+import CheckupPage from "@/pages/Checkup/CheckupPage";
+import { ProtectedRoute } from "./ProtectedRoute";
+import { RedirectAuthorized } from "./RedirectAuthorized";
 
 export default function Router() {
+  const token = localStorage.getItem("token");
+
   return (
     <Routes>
+      <Route
+        path="/"
+        element={<Navigate to={token ? "/services" : "/sign-in"} replace />}
+      />
+
       <Route path="/" element={<Layout />}>
-        <Route path="/" element={<SignUpPage />} />
-        <Route path="/confirm-email" element={<ConfirmEmailPage />} />
-        <Route path="/create-password" element={<CreatePasswordPage />} />
-        <Route path="/sign-in" element={<SignInPage />} />
-        <Route path="/password-recovery" element={<PasswordRecoveryPage />} />
+        <Route
+          path="/sign-up"
+          element={
+            <RedirectAuthorized>
+              <SignUpPage />
+            </RedirectAuthorized>
+          }
+        />
+        <Route
+          path="/confirm-email"
+          element={
+            <RedirectAuthorized>
+              <ConfirmEmailPage />
+            </RedirectAuthorized>
+          }
+        />
+        <Route
+          path="/create-password"
+          element={
+            <RedirectAuthorized>
+              <CreatePasswordPage />
+            </RedirectAuthorized>
+          }
+        />
+        <Route
+          path="/sign-in"
+          element={
+            <RedirectAuthorized>
+              <SignInPage />
+            </RedirectAuthorized>
+          }
+        />
+        <Route
+          path="/password-recovery"
+          element={
+            <RedirectAuthorized>
+              <PasswordRecoveryPage />
+            </RedirectAuthorized>
+          }
+        />
         <Route
           path="/password-recovery-code"
-          element={<PasswordRecoveryCodePage />}
+          element={
+            <RedirectAuthorized>
+              <PasswordRecoveryCodePage />
+            </RedirectAuthorized>
+          }
         />
-        <Route path="/services" element={<ServicesPage />} />
-        <Route path="/food-detector" element={<FoodDetectorPage />} />
-        <Route path="/account" element={<ProfilePage />} />
-        <Route path="/diary" element={<DiaryPage />} />
-        <Route path="/chat" element={<AskDoctorPage />} />
-        <Route path="/woman-diary" element={<WomanDiaryPage />} />
-        <Route path="/analyses-detect" element={<AnalysesDetectPage />} />
+
+        {/* Protected routes */}
+        <Route
+          path="/services"
+          element={
+            <ProtectedRoute>
+              <ServicesPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/food-detector"
+          element={
+            <ProtectedRoute>
+              <FoodDetectorPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/account"
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/diary"
+          element={
+            <ProtectedRoute>
+              <DiaryPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/chat"
+          element={
+            <ProtectedRoute>
+              <AskDoctorPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/woman-diary"
+          element={
+            <ProtectedRoute>
+              <WomanDiaryPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/analyses-detect"
+          element={
+            <ProtectedRoute>
+              <AnalysesDetectPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/checkup"
+          element={
+            <ProtectedRoute>
+              <CheckupPage />
+            </ProtectedRoute>
+          }
+        />
       </Route>
     </Routes>
   );

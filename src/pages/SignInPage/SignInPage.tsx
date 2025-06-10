@@ -7,6 +7,7 @@ import { EmailOrWhatsAppInput } from "../../features/auth/ui/EmailORWhatsAppInpu
 import { validateEmail } from "../../shared/lib/validation/validateEmail";
 import { message } from "antd";
 import TelegramLoginButton from "../../shared/ui/TelegramLoginButton/TelegramLoginButton";
+import { auth } from "@/api/auth";
 
 export default function SignInPage() {
   const [isWhatsApp, setIsWhatsApp] = useState(false);
@@ -14,17 +15,36 @@ export default function SignInPage() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = () => {
-    if (!validateEmail(inputValue)) {
-      message.error("Enter the correct email");
-      return;
+  const handleSubmit = async () => {
+    let valueToSend = inputValue.trim();
+
+    if (isWhatsApp) {
+      if (!valueToSend.startsWith("+")) {
+        valueToSend = "+" + valueToSend;
+      }
+    } else {
+      if (!validateEmail(valueToSend)) {
+        message.error("Enter the correct email address");
+        return;
+      }
     }
+
     if (password.trim().length < 8) {
       message.error("The password must be at least 8 characters long.");
       return;
     }
 
-    navigate("/services");
+    try {
+      await auth(valueToSend, password);
+      message.success("User is authorized");
+      navigate("/services");
+    } catch (error) {
+      if (error instanceof Error) {
+        message.error(error.message);
+      } else {
+        message.error("Something went wrong");
+      }
+    }
   };
 
   return (
@@ -33,7 +53,7 @@ export default function SignInPage() {
         <img src="media/logo.svg" alt="logo" className="w-44" />
       </div>
       <div className="flex flex-col items-center gap-5 w-full max-w-md relative bottom-5">
-        <TelegramLoginButton/>
+        <TelegramLoginButton />
         <div className="w-full relative bottom-1">
           <EmailOrWhatsAppInput
             value={inputValue}
@@ -73,7 +93,7 @@ export default function SignInPage() {
         <p className="text-[14px] tracking-[0.7px] relative top-2">
           Don`t have an account yet?
           <span
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/sign-up")}
             className="border-b ml-1 cursor-pointer"
             style={{ color: colors.main_blue, borderColor: colors.main_blue }}
           >

@@ -44,7 +44,12 @@ export default function ServicesPage() {
       image: "media/services/food-detector.svg",
       path: "/food-detector",
     },
-    { id: 8, title: "Checkup", image: "media/services/checkup.svg", path: "" },
+    {
+      id: 8,
+      title: "Checkup",
+      image: "media/services/checkup.svg",
+      path: "/checkup",
+    },
   ];
 
   return (
