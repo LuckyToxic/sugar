@@ -1,3 +1,4 @@
+import { askDoctor } from "@/api/askDoctor";
 import { useState, useRef, useEffect } from "react";
 
 type Message = {
@@ -6,56 +7,107 @@ type Message = {
   from: "user" | "doctor";
 };
 
-const initialMessages: Message[] = [
-  {
-    text: "Hello doctor can you tell me how to boost my immune system?",
-    time: "9:41",
-    from: "user",
-  },
-  {
-    text: "Hello, to strengthen your immunity you should; Give up bad habits, sleep 7-8 hours a day, exercise and eat a balanced diet!",
-    time: "9:41",
-    from: "doctor",
-  },
-  {
-    text: "Thank you, Doctor.",
-    time: "9:43",
-    from: "user",
-  },
-  {
-    text: "You're welcome, take care!",
-    time: "9:43",
-    from: "doctor",
-  },
-];
+const LOCAL_STORAGE_KEY = "askDoctorMessages";
 
 export default function AskDoctorPage() {
-  const [messages, setMessages] = useState<Message[]>(initialMessages);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState<string>("");
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
+  // Загрузка сообщений из localStorage при первом рендере
+  useEffect(() => {
+    const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          setMessages(parsed);
+        }
+      } catch (error) {
+        console.error("Ошибка парсинга сообщений из localStorage", error);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const handleSend = (e: React.FormEvent<HTMLFormElement>) => {
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(messages));
+  }, [messages]);
+
+  const handleSend = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!input.trim()) return;
+
     const now = new Date();
     const time = now.toLocaleTimeString("en-GB", {
       hour: "2-digit",
       minute: "2-digit",
     });
-    setMessages([
-      ...messages,
-      {
-        text: input,
-        time,
-        from: "user",
-      },
-    ]);
+
+    const userMessage: Message = {
+      text: input,
+      time,
+      from: "user",
+    };
+
+    setMessages((prev) => [...prev, userMessage]);
+    const userText = input;
     setInput("");
+
+    try {
+      await askDoctor(userText);
+    } catch (err) {
+      console.error("Ошибка при отправке вопроса:", err);
+    }
   };
+
+  // Подключение к SSE
+  useEffect(() => {
+    const sessionId = localStorage.getItem("sessionId");
+    if (!sessionId) return;
+
+    const eventSource = new EventSource(
+      `${import.meta.env.VITE_BASE_URL}/gpt/connect?session_id=${sessionId}`
+    );
+
+    eventSource.addEventListener(
+      "DoctorAnswerResult",
+      (event: MessageEvent) => {
+        try {
+          const parsed = JSON.parse(event.data);
+          if (!parsed?.detail) return;
+
+          const now = new Date();
+          const time = now.toLocaleTimeString("en-GB", {
+            hour: "2-digit",
+            minute: "2-digit",
+          });
+
+          const doctorMessage: Message = {
+            text: parsed.detail,
+            time,
+            from: "doctor",
+          };
+
+          setMessages((prev) => [...prev, doctorMessage]);
+        } catch (error) {
+          console.error("Ошибка парсинга DoctorAnswerResult:", error);
+        }
+      }
+    );
+
+    eventSource.onerror = (error) => {
+      console.error("Ошибка SSE:", error);
+      eventSource.close();
+    };
+
+    return () => {
+      eventSource.close();
+    };
+  }, []);
 
   return (
     <div className="w-full h-screen-dynamic-minus-header bg-[#F7F7F7] flex flex-col justify-between pt-1">
@@ -75,7 +127,6 @@ export default function AskDoctorPage() {
               }`}
               style={{ wordBreak: "break-word" }}
             >
-              {/* Хвостик */}
               {msg.from === "doctor" && (
                 <img
                   src="media/tail-gray.svg"
@@ -84,10 +135,11 @@ export default function AskDoctorPage() {
                 />
               )}
 
-              {/* Текст сообщения */}
-              <div className="font-[400] tracking-[0.4px]">{msg.text}</div>
+              <div
+                className="font-[400] tracking-[0.4px]"
+                dangerouslySetInnerHTML={{ __html: msg.text }}
+              ></div>
 
-              {/* Время под текстом, выровнено по правому краю */}
               <div
                 className={`text-[11px] h-2 ${
                   msg.from === "user" ? "text-[#F7F7F799]" : "text-[#3C3C4399]"
@@ -97,7 +149,6 @@ export default function AskDoctorPage() {
                 {msg.time}
               </div>
 
-              {/* Хвостик */}
               {msg.from === "user" && (
                 <img
                   src="media/tail-violet.svg"

@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getUserThunk } from "../api/userApi";
 import type { User } from "../model";
+import { updateUserLangThunk } from "../api/updateLang";
 
 type UserState = {
   user: User | null;
@@ -22,12 +23,10 @@ const userSlice = createSlice({
       state.user = null;
       state.error = null;
       state.isLoading = false;
-      localStorage.removeItem("authToken");
     },
   },
   extraReducers: (builder) => {
     builder
-      //getUserThunk
       .addCase(getUserThunk.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -40,6 +39,11 @@ const userSlice = createSlice({
         state.isLoading = false;
         state.error =
           action.payload?.error || "Ошибка при загрузке пользователя";
+      })
+      .addCase(updateUserLangThunk.fulfilled, (state, action) => {
+        if (state.user && state.user.sub_data) {
+          state.user.sub_data.lang = action.payload;
+        }
       });
   },
 });

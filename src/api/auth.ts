@@ -2,15 +2,9 @@ import axios from "axios";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
-export const auth = async (
-  login: string,
-  password: string
-): Promise<string | void> => {
+export const auth = async (data: any): Promise<string | void> => {
   try {
-    const response = await axios.post(`${baseUrl}/auth`, {
-      login,
-      password,
-    });
+    const response = await axios.post(`${baseUrl}/auth`, data);
 
     const token = response.headers["authorization"];
 

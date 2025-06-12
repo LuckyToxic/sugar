@@ -16,6 +16,7 @@ import AnalysesDetectPage from "@/pages/AnalysesDetectPage/AnalysesDetectPage";
 import CheckupPage from "@/pages/Checkup/CheckupPage";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { RedirectAuthorized } from "./RedirectAuthorized";
+import MedicalCardPage from "@/pages/MedicalCard/MedicalCardPage";
 
 export default function Router() {
   const token = localStorage.getItem("token");
@@ -139,6 +140,14 @@ export default function Router() {
           element={
             <ProtectedRoute>
               <CheckupPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/medical-card"
+          element={
+            <ProtectedRoute>
+              <MedicalCardPage />
             </ProtectedRoute>
           }
         />

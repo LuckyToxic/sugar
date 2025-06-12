@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import ServicesItem from "../../widgets/ServicesItem/ServicesItem";
+import { getSessionId } from "@/api/getSession";
 
 export default function ServicesPage() {
   const services = [
@@ -18,7 +20,7 @@ export default function ServicesPage() {
       id: 3,
       title: "Medical card",
       image: "media/services/medical-card.svg",
-      path: "",
+      path: "/medical-card",
     },
     {
       id: 4,
@@ -52,14 +54,27 @@ export default function ServicesPage() {
     },
   ];
 
+  useEffect(() => {
+    const fetchSessionId = async () => {
+      try {
+        const session = await getSessionId();
+        localStorage.setItem("sessionId", session);
+      } catch (error) {
+        console.error("Ошибка при получении session-id:", error);
+      }
+    };
+
+    fetchSessionId();
+  }, []);
+
   return (
     <div
-      className="h-screen-dynamic-minus-header bg-[#F8F8F8] bg-center bg-cover p-4"
+      className="h-screen-dynamic-minus-header bg-[#F8F8F8] bg-center bg-cover px-4"
       style={{
         backgroundImage: "url(media/services-bg.svg)",
       }}
     >
-      <div className="h-full min-h-0 pb-5 hide-scrollbar flex flex-wrap justify-center gap-x-9 gap-y-3 overflow-y-auto">
+      <div className="h-full min-h-0 pb-5 hide-scrollbar flex flex-wrap justify-center gap-x-9 gap-y-3 overflow-y-auto pt-4">
         {services.map((service) => (
           <ServicesItem key={service.id} item={service} />
         ))}

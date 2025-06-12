@@ -18,6 +18,7 @@ export default function Header() {
     "/woman-diary": { title: "Woman diary", showArrowBack: true },
     "/analyses-detect": { title: "Recognition camera ", showArrowBack: true },
     "/checkup": { title: "Checkup", showArrowBack: true },
+    "/medical-card": { title: "Medical Card", showArrowBack: true },
   };
 
   const currentPage = pagesWithHeader[location.pathname];

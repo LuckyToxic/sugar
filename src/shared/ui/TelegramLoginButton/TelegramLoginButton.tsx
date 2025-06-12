@@ -2,35 +2,36 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { message } from "antd";
 import { colors } from "../../../app/styles/variables";
-import { useAppDispatch } from "../../hooks/reduxHooks";
-import { getUserThunk } from "../../../entities/user/api/userApi";
+// import { useAppDispatch } from "../../hooks/reduxHooks";
+// import { getUserThunk } from "../../../entities/user/api/userApi";
+import { auth } from "@/api/auth";
 
 const TelegramLoginButton = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    const params = getQueryParams();
-    if (params.id) {
-      handleTelegramAuth(params);
-    } else if (params.tgAuthResult) {
-      const data = JSON.parse(atob(params.tgAuthResult));
-      handleTelegramAuth(data);
-    }
-  }, []);
+  // const dispatch = useAppDispatch();
+  // useEffect(() => {
+  //   const params = getQueryParams();
+  //   if (params.id) {
+  //     handleTelegramAuth(params);
+  //   } else if (params.tgAuthResult) {
+  //     const data = JSON.parse(atob(params.tgAuthResult));
+  //     handleTelegramAuth(data);
+  //   }
+  // }, []);
 
-  const getQueryParams = () => {
-    return Object.fromEntries(new URLSearchParams(window.location.search));
-  };
+  // const getQueryParams = () => {
+  //   return Object.fromEntries(new URLSearchParams(window.location.search));
+  // };
 
-  const handleTelegramAuth = async (data: any) => {
-    if (data) {
-      dispatch(getUserThunk(data));
-      message.success("Welcome");
-      navigate("/services");
-      return;
-    }
-    message.error("Auth error");
-  };
+  // const handleTelegramAuth = async (data: any) => {
+  //   if (data) {
+  //     dispatch(getUserThunk(data));
+  //     message.success("Welcome");
+  //     navigate("/services");
+  //     return;
+  //   }
+  //   message.error("Auth error");
+  // };
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -58,7 +59,18 @@ const TelegramLoginButton = () => {
             message.error("Telegram login failed");
             return;
           }
-          handleTelegramAuth(data);
+          // Внутри callback нельзя использовать await, поэтому вызываем async функцию отдельно
+          (async () => {
+            try {
+              await auth(data);
+              if (data?.photo_url) {
+                localStorage.setItem("photo", data?.photo_url);
+              }
+              navigate("/services");
+            } catch (error: any) {
+              message.error(error.message || "Telegram login failed");
+            }
+          })();
         }
       );
     } else {

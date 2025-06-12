@@ -40,7 +40,7 @@ export default function CreatePasswordPage() {
       try {
         await createUser(login, password, hash);
         message.success("Account has been successfully registered");
-        await auth(login, password);
+        await auth({ login, password });
         navigate("/services");
       } catch (error) {
         if (error instanceof Error) {

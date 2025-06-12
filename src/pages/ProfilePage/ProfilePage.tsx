@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SiTelegram, SiWhatsapp } from "react-icons/si";
 import { MdEmail } from "react-icons/md";
 import {
@@ -12,7 +12,9 @@ import ShowPaymentIdentifier from "@/features/profile/ui/ShowPaymentIdentifier/S
 import ShowSubscriptionStatus from "@/features/profile/ui/ShowSubscriptionStatus/ShowSubscriptionStatus";
 import UserHeader from "@/features/profile/ui/UserHeader/UserHeader";
 import ProfileMenuItem from "@/features/profile/ui/ProfileMenuItem/ProfileMenuItem";
-
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/app/store/store";
+import { getUserThunk } from "@/entities/user/api/userApi";
 
 const mockProfiles: ConnectedProfile[] = [
   {
@@ -48,25 +50,14 @@ export default function ProfilePage() {
   const user = useAppSelector((state) => state.user.user);
   const [activeChannel, setActiveChannel] = useState<string | null>(null);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const [activeLanguage, setActiveLanguage] = useState<string>("Русский");
 
   function handleChannelChange(channel: string) {
     setActiveChannel((prev) => (prev === channel ? null : channel));
   }
-
-  function handleLanguageChange(language: string) {
-    setActiveLanguage(language);
-  }
-
-  // const user = {
-  //   auth_date: 1748342645,
-  //   first_name: "Евгений",
-  //   hash: "95b958c87f1779490bf93384ba21215408c88cd374b759fca4055a2db407dc39",
-  //   id: 7761094400,
-  //   photo_url:
-  //     "https://t.me/i/userpic/320/KGAm2mzULAteAOt0k30_ENWNPc_DIHQwnQ2A8tTa6AshH3RrvqcSZFR--MYDXbW0.jpg",
-  //   username: "JohnBiBot",
-  // };
+  const dispatch: AppDispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getUserThunk());
+  }, []);
 
   const menuItems = [
     {
@@ -82,12 +73,7 @@ export default function ProfilePage() {
     {
       text: "Language",
       icon: "media/profile/language.svg",
-      content: (
-        <LanguageSettings
-          activeLanguage={activeLanguage}
-          onChange={handleLanguageChange}
-        />
-      ),
+      content: <LanguageSettings />,
     },
     {
       text: "Account linking",

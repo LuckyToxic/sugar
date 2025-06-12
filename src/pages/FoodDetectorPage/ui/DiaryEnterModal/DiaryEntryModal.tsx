@@ -64,6 +64,32 @@ export default function DiaryEntryModal({
                 onChange={(e) => setInsulin(e.target.value)}
               />
             </div>
+            <div className="flex items-center border-2 border-[#674EC8] rounded-lg px-3 py-2.5 mb-4">
+              <span className="mr-2">
+                <img src="media/diary/glucose.svg" alt="glucose" />
+              </span>
+              <input
+                className="flex-1 outline-none bg-transparent text-[#674EC8] placeholder:text-[#674EC8] placeholder:font-[500]"
+                placeholder="Glucose level"
+                type="number"
+                value={insulin}
+                autoFocus
+                onChange={(e) => setInsulin(e.target.value)}
+              />
+            </div>
+            <div className="flex items-center border-2 border-[#674EC8] rounded-lg px-3 py-2.5 mb-4">
+              <span className="mr-2">
+                <img src="media/diary/blood.svg" alt="insulin" />
+              </span>
+              <input
+                className="flex-1 outline-none bg-transparent text-[#674EC8] placeholder:text-[#674EC8] placeholder:font-[500]"
+                placeholder="Blood pressure"
+                type="number"
+                value={insulin}
+                autoFocus
+                onChange={(e) => setInsulin(e.target.value)}
+              />
+            </div>
             <div className="mb-3 text-[17px] text-[#6147C6]">
               Physical activity
             </div>

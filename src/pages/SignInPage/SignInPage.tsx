@@ -35,7 +35,7 @@ export default function SignInPage() {
     }
 
     try {
-      await auth(valueToSend, password);
+      await auth({ login: valueToSend, password });
       message.success("User is authorized");
       navigate("/services");
     } catch (error) {
